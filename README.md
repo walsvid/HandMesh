@@ -6,6 +6,7 @@
 This repo is the PyTorch implementation of hand mesh reconstruction described in [CMR](https://arxiv.org/abs/2103.02845) and [MobRecon](https://arxiv.org/abs/2112.02753).
 
 ## Update
++ 2024-06-11. Using manotorch as mano implementation.
 + 2023-11-2. Add MobRecon (SpiralConv verison) model for more robust real-world applications. If you target on freely captured images, please try `./cmr/scripts/demo_mobrecon.sh`. 
 + 2022-4-28. Wrap old-version code in `cmr`, including CMR demo/training/evaluation and Mobrecon demo/evaluation. Add `mobrecon` to release MobRecon training.
 + 2021-12-7. Add MobRecon demo.
@@ -40,6 +41,8 @@ This repo is the PyTorch implementation of hand mesh reconstruction described in
   ln -s /path/to/mano_v1_2/MANO_RIGHT.pkl template/MANO_RIGHT.pkl
   ```
 + Download the files you need from [Google drive](https://drive.google.com/drive/folders/1MIE0Jo01blG6RWo2trQbXlQ92tMOaLx_?usp=sharing) or [Baidu cloud](https://pan.baidu.com/s/12X1qsuxO2j8jGl6QWJdV6A?pwd=rc4x).
+
++ Please use `manotorch==0.0.1` as mano layer. You can install manotorch from [manotorch repo](https://github.com/lixiny/manotorch).
 
 ## Run a demo
 + Prepare pre-trained models as
