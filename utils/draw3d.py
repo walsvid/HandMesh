@@ -107,8 +107,8 @@ def draw_2d_skeleton(image, pose_uv):
     """
     assert pose_uv.shape[0] == 21
     skeleton_overlay = image.copy()
-    marker_sz = 6
-    line_wd = 3
+    marker_sz = 2
+    line_wd = 1
     root_ind = 0
 
     for joint_ind in range(pose_uv.shape[0]):
@@ -226,7 +226,7 @@ def draw_3d_mesh(mesh_xyz, image_size, face):
     plt.close(fig)
     return ret
 
-def save_a_image_with_mesh_joints(image, mask, poly, cam_param, mesh_xyz, face, pose_uv, pose_xyz, file_name, padding=0, ret=False):
+def save_a_image_with_mesh_joints(image, mask, poly, cam_param, mesh_xyz, face, pose_uv, pose_xyz, file_name, padding=0, ret=False, scale=1.0):
     """
     :param mesh_plot:
     :param image: H x W x 3 (np.array)
@@ -241,6 +241,16 @@ def save_a_image_with_mesh_joints(image, mask, poly, cam_param, mesh_xyz, face, 
     :param padding:
     :return:
     """
+    h_, w_, c_ = image.shape
+    image = cv2.resize(image, (int(w_ * scale), int(h_ * scale)))
+    cam_param[:2,2] = cam_param[:2,2] * scale
+    cam_param[0, 0] *= scale
+    cam_param[1, 1] *= scale
+
+    pose_uv = pose_uv * scale
+    # mesh_xyz *= scale
+
+
     if poly is not None:
         img_mask = draw_silhouette(image, mask, poly)
     else:
@@ -250,7 +260,7 @@ def save_a_image_with_mesh_joints(image, mask, poly, cam_param, mesh_xyz, face, 
     skeleton_3d = draw_3d_skeleton(pose_xyz, image.shape[:2])
     mesh_3d = draw_3d_mesh(mesh_xyz, image.shape[:2], face)
 
-    img_list = [img_mask, skeleton_overlay, rend_img_overlay, mesh_3d, skeleton_3d]
+    img_list = [img_mask, rend_img_overlay, skeleton_overlay , mesh_3d, skeleton_3d]
     image_height = image.shape[0]
     image_width = image.shape[1]
     num_column = len(img_list)
